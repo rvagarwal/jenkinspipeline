@@ -16,7 +16,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                                echo "stage 1: using project: ${openshift.project()} in cluster ${openshift.cluster()}"
+                                oc create deployment jenkinsdeployment1 --image quay.io/mayank123modi/mayanknginximage}"
                         }
                     }
                 }
@@ -25,13 +25,13 @@ pipeline {
 
         stage('stage 2') {
             steps {
-                sh 'echo hello from stage 2!'
+                sh 'oc expose deplyment jenkinsdeployment1  --port 80'
             }
         }
 
         stage('manual approval') {
             steps {
-                timeout(time: 60, unit: 'MINUTES') {
+                timeout(time: 4, unit: 'MINUTES') {
                     input message: "Move to stage 3?"
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
 
         stage('stage 3') {
             steps {
-                sh 'echo hello from stage 3!. This is the last stage...'
+                sh 'oc expose service jenkinsdeployment1'
             }
         }
 
