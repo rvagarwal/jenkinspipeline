@@ -16,7 +16,7 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                                oc create deployment jenkinsdeployment1 --image quay.io/mayank123modi/mayanknginximage
+                               sh 'oc create deployment jenkinsdeployment1 --image quay.io/mayank123modi/mayanknginximage'
                         }
                     }
                 }
