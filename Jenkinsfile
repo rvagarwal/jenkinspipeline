@@ -25,7 +25,9 @@ pipeline {
 
         stage('stage 2') {
             steps {
-                sh 'oc expose deplyment jenkinsdeployment1  --port 80'
+                timeout(time: 30, unit: 'SECONDS') {
+                    sh 'oc expose deployment jenkinsdeployment1 --port 80'
+                }
             }
         }
 
