@@ -16,7 +16,11 @@ pipeline {
                 script {
                     openshift.withCluster() {
                         openshift.withProject() {
-                               sh 'oc create deployment jenkinsdeployment1 --image quay.io/mayank123modi/mayanknginximage'
+                            try{ sh 'oc create deployment jenkinsdeployment1 --image quay.io/mayank123modi/mayanknginximage'}
+                            catch (err){
+                                echo 'deployment already existis'
+                            }
+                              
                         }
                     }
                 }
